@@ -40,10 +40,12 @@ contributions are welcomed! Feel free to fork the repository and submit pull req
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## <span style="color: #00BFFF; font-weight: bold;">🌟 Acknowledgments</span>
 
-- Thanks to all contributors and the open-source community.
+## <span style="color:green">🚀 About Me</span>
+I'm a full stack Web & App Developer and an undergrad Data Science Student 👨‍💻🙌
 
----
+## <span style="color:green">Authors</span>
 
+- [@Fahad](https://github.com/SyedFahad7)
+-------
 Happy Studying! 🦉
