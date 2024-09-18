@@ -1,0 +1,27 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual Environment
+venv/
+ENV/
+env/
+*.egg-info/
+
+# Node Modules
+node_modules/
+
+# Tailwind CSS Output
+/static/css/output.css
+
+# IDE/Editor
+.vscode/
+.idea/
+
+# OS Specific
+.DS_Store
+*.swp
