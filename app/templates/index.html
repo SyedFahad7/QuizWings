@@ -1,19 +1,223 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizWings</title>
-    <!-- Tailwind CSS via CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mx-auto">
-        <h1 class="text-3xl font-bold underline">
-            Welcome to QuizWings!
-        </h1>
-        <!-- More HTML content here -->
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+   QuizWings Chatbot
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Spicy+Rice&display=swap" rel="stylesheet">
+  <style>
+  .press-start {
+    font-family: "Press Start 2P", system-ui, "Segoe UI Symbol", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .play-regular {
+  font-family: "Play", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  }
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .speech-bubble {
+      position: relative;
+      background: #e0f7fa;
+      border-radius: .4em;
+      padding: 10px;
+      max-width: 80%;
+      margin: 10px 0;
+      display: inline-block;
+      text-align: left;
+    }
+
+    .speech-bubble:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 10px;
+      width: 0;
+      height: 0;
+      border: 15px solid transparent;
+      border-top-color: #e0f7fa;
+      border-bottom: 0;
+      border-right: 0;
+      margin-left: -7.5px;
+      margin-bottom: -15px;
+    }
+  </style>
+  <script>
+   function toggleDropdown() {
+     var dropdown = document.getElementById("dropdown-content");
+     if (dropdown.style.display === "block") {
+       dropdown.style.display = "none";
+     } else {
+       dropdown.style.display = "block";
+     }
+   }
+
+   function sendMessage() {
+     var messageInput = document.getElementById("messageInput");
+     var message = messageInput.value.trim();
+     if (message !== "") {
+       var chatBox = document.getElementById("chatBox");
+       var messageElement = document.createElement("div");
+       messageElement.className = "speech-bubble self-end bg-blue-100 p-2 rounded-lg mb-2 text-left";
+       messageElement.innerText = message;
+       chatBox.appendChild(messageElement);
+       messageInput.value = "";
+
+       // Clear the initial content
+       var initialContent = document.getElementById("initialContent");
+       if (initialContent) {
+         initialContent.style.display = "none";
+       }
+     }
+   }
+
+   function attachFile() {
+     var fileInput = document.getElementById("fileInput");
+     fileInput.click();
+   }
+
+   function handleFileChange(event) {
+     var file = event.target.files[0];
+     if (file) {
+       var chatBox = document.getElementById("chatBox");
+       var fileElement = document.createElement("div");
+       fileElement.className = "speech-bubble self-end bg-blue-100 p-2 rounded-lg mb-2 text-left";
+       fileElement.innerText = "Attached: " + file.name;
+       chatBox.appendChild(fileElement);
+     }
+   }
+
+   document.addEventListener("DOMContentLoaded", function() {
+     var messageInput = document.getElementById("messageInput");
+     messageInput.addEventListener("keypress", function(event) {
+       if (event.key === "Enter") {
+         event.preventDefault();
+         sendMessage();
+       }
+     });
+   });
+  </script>
+ </head>
+ <body class="bg-gray-100 font-sans">
+  <div class="bg-white/30 backdrop-blur-lg border border-white/20 shadow-lg p-4 mx-4 mt-4 rounded-3xl flex items-center justify-between transition-transform lg:hover:scale-70 lg:hover:-translate-y-1 duration-300">
+    <div class="flex items-center space-x-2 cursor-pointer" onclick="location.reload()">
+      <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white/30">
+        <img alt="Logo" class="w-full h-full object-cover" height="32" src="/app/static/images/quizwingslogo.png" width="12"/>
+      </div>
+      <h1 class="text-sm font-bold press-start  text-black">
+        QuizWings
+      </h1>
     </div>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
+    <div class="relative">
+      <i class="fas fa-bars text-2xl text-black cursor-pointer" onclick="toggleDropdown()"></i>
+      <div class="dropdown-content absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-content">
+        <a href="" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 press-start text-xs">Settings</a>
+        <a href="about.html" class="px-4 py-2 text-gray-700 hover:bg-gray-100 press-start text-xs">About</a>
+        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 press-start text-xs">Contact</a>
+      </div>
+    </div>
+  </div>
+        
+  <div class="p-6 text-center" id="initialContent">
+   <h2 class="text-2xl mb-4 press-start md:text-3xl tracking-tighter">
+    Hello <span class="text-2xl md:text-5xl tracking-tighter -ml-5">👋🏻</span>!
+   </h2>
+   <p class="text-gray-700 mb-6 press-start md:text-sm text-xs tracking-tighter">
+    I'm QuizWings, your quiz buddy. Let's have some fun with trivia!
+   </p>
+   <h3 class="text-xs press-start mb-4 md:text-lg tracking-tight font-thin text-gray-900">
+    Here are some common Topics:
+   </h3>
+   <div class="space-y-4 mb-6">
+    <button class="border press-start text-xs border-black text-gray-700 md:text-xl py-2 px-4 rounded-full lg:w-9/12 md:w-full hover:bg-blue-600 hover:text-white transition duration-300">
+     General Knowledge
+    </button>
+    <button class="border press-start text-xs border-black text-gray-700 md:text-xl py-2 px-4 rounded-full lg:w-9/12 md:w-full  hover:bg-blue-600 hover:text-white transition duration-300">
+     Science
+    </button>
+    <button class="border press-start text-xs border-black text-gray-700 md:text-xl py-2 px-4 rounded-full lg:w-9/12 md:w-full  hover:bg-blue-600 hover:text-white transition duration-300">
+     History
+    </button>
+    <button class="border press-start text-xs border-black text-gray-700 md:text-xl py-2 px-4 rounded-full lg:w-9/12 md:w-full  hover:bg-blue-600 hover:text-white transition duration-300">
+     Sports
+    </button>
+   </div>
+   <p class="text-gray-600 mb-6 md:text-lg">
+    By continuing, you agree to our
+    <a class="text-blue-600" href="terms-and-privacy.html#terms">
+      Terms and Conditions
+    </a>
+    and
+    <a class="text-blue-600" href="terms-and-privacy.html#privacy">
+      Privacy Policy
+    </a>
+    .
+  </p>  
+  </div>
+  <div id="chatBox" class="mb-12 p-6 flex flex-col items-end"></div>
+
+<!-- Chat Input Box -->
+<div class="fixed bottom-0 left-0 right-0 bg-gray-100 p-4">
+  <div class="flex items-center border border-gray-300 rounded-full p-2 bg-white shadow-md mb-4">
+    <input 
+      class="flex-grow px-4 py-2 outline-none w-full" 
+      id="messageInput" 
+      placeholder="Type your message here..." 
+      type="text"/>
+    
+    <!-- Attach Icon -->
+    <i class="fas fa-paperclip text-blue-400 text-xl cursor-pointer mr-3" onclick="attachFile()"></i>
+    <input 
+      accept=".pdf,.doc,.docx" 
+      class="hidden" 
+      id="fileInput" 
+      onchange="handleFileChange(event)" 
+      type="file" 
+      title="Attach a file"/>
+    
+    <!-- Send Icon -->
+    <i class="fas fa-paper-plane text-blue-400 text-xl cursor-pointer mr-6" onclick="sendMessage()"></i>
+  </div>
+  
+  <!-- Footer Text -->
+  <div class="text-center">
+    <p class="text-gray-600 press-start">
+      Made with <span class="text-red-600 press-start text-2xl">♡</span>
+    </p>
+  </div>
+</div>
+
+    </p>
+   </div>
+  </div>
+ </body>
 </html>
